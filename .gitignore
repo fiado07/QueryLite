@@ -1,0 +1,16 @@
+
+\.vs/
+
+QueryLite\.sln
+
+Nuget/
+
+QueryLite\.Test/bin/
+
+QueryLite\.Test/obj/
+
+QueryLite\.Test/packages\.config
+
+QueryLite/Properties/
+
+QueryLite\.Test/Properties/
