@@ -21,8 +21,9 @@ namespace QueryLite.Test.TestCases
         public ODBCContext()
         {
 
-            DbConnectionBase = new OdbcConnection("Provider=MSDASQL;DSN=Prod_ICBS; UID=; PWD=");
+            //DbConnectionBase = new OdbcConnection("Provider=MSDASQL;DSN=; UID=; PWD=");
 
+  
             DbProvider = DbProviderType.ODBCClient;
 
             SetAdapter = new OdbcDataAdapter();

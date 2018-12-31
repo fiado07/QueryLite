@@ -26,27 +26,16 @@ namespace QueryLite.Test.TestCases
         {
 
 
-            StringBuilder builder = new StringBuilder();          
+            StringBuilder builder = new StringBuilder();
             SqlAndParameters sqlParameters = new SqlAndParameters();
             System.Data.DataTable table = null;
 
-            string inCIF = "";
 
-            builder.Append("SELECT ");
-            builder.Append("'' as cif, ");
-            builder.Append("'' as nome,  ");
-            builder.Append("'' as datanascimento,  ");
-            builder.Append("'' as sexo,  ");
-            builder.Append("'' as morada1,  ");
-            builder.Append("'' as balcao ");
-            builder.Append("FROM ''  where  ");
-            builder.Append("''='" + inCIF + "' and ''=1 ");
+            builder.Append("Select * from c02 where CFB='' and CF=1 ");
 
             sqlParameters.Sql = builder.ToString();
 
-
             table = queryBuilder.ExecuteSqlGetDataTable(sqlParameters);
-         
 
             Assert.IsTrue(table.Rows.Count > 0);
 
@@ -61,33 +50,58 @@ namespace QueryLite.Test.TestCases
             SqlAndParameters sqlParameters = new SqlAndParameters();
             List<Parameter> parameters = new List<Parameter>();
 
-            Person person = null;
-                        
-            string inCIF = "''";
+            cfp102 db2object = null;
 
-            builder.Append("'' ");
-            builder.Append("'' as cif, ");
-            builder.Append("'' as nome,  ");
-            builder.Append("'' as datanascimento,  ");
-            builder.Append("'' as sexo,  ");
-            builder.Append("'' as morada1,  ");
-            builder.Append("'' as balcao ");
-            builder.Append("FROM ''  where  ");
-            builder.Append("''='" + inCIF + "' and ''=? ");
+            builder.Append("Select * from c102 where CCH=? and CFB=1");
 
-
-            parameters.Add(new Parameter { ParameterKey = "?", ParameterValue = 1 });
+            parameters.Add(new Parameter { ParameterKey = "?", ParameterValue = "121" });
 
             sqlParameters.Sql = builder.ToString();
             sqlParameters.Parameter = parameters;
 
-            person = queryBuilder.ExecuteSqlGetObject<Person>(sqlParameters);
+            db2object = queryBuilder.ExecuteSqlGetObject<cfp102>(sqlParameters);
+
+            Assert.IsNotNull(db2object);
 
 
-            Console.WriteLine(person.nome);
+        }
 
-            Assert.IsTrue(person != null);
 
+        [Test]
+        public void ODBC_GetObject()
+        {
+
+            cfp102 db2object = null;
+
+            db2object = queryBuilder.Get<cfp102>((x) => x.CF2 == "121");
+
+            Assert.IsNotNull(db2object);
+
+
+        }
+
+        [Test]
+        public void ODBC_GetObjectList()
+        {
+
+            IEnumerable<cfp102> db2object = null;
+
+            db2object = queryBuilder.GetList<cfp102>((x) => x.CF2 .Contains("M"));
+
+            Assert.IsNotNull(db2object);
+
+
+        }
+
+        [Test]
+        public void ODBC_GetObjectAny()
+        {
+
+            bool db2object = false;
+
+            db2object = queryBuilder.any<cfp102>((x) => x.CFB1.Contains("M"));
+
+            Assert.IsNotNull(db2object);
 
 
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq.Expressions;
 using QueryLite.Contracts;
 using QueryLite.Parameters;
 using QueryLite.Repository;
@@ -55,6 +56,36 @@ namespace QueryLite.SqlQuery
         public DataTable ExecuteSqlGetDataTable(SqlAndParameters sqlParameter)
         {
             return dbQuery.ExecuteSqlGetDataTable(sqlParameter);
+        }
+
+        public void Add<T>(T dataObject, List<string> excludeProperties = null, bool isStoredProcedure = false)
+        {
+            dbQuery.Add(dataObject, excludeProperties, isStoredProcedure);
+        }
+
+        public void Update<T>(T dataObject, string predicate, List<string> excludeProperties = null, bool isStoredProcedure = false)
+        {
+            dbQuery.Update(dataObject, predicate, excludeProperties, isStoredProcedure);
+        }
+
+        public T Get<T>(Expression<Func<T, bool>> predicate) where T : class, new()
+        {
+           return  dbQuery.Get ( predicate);
+        }
+
+        public IEnumerable<T> GetList<T>(Expression<Func<T, bool>> predicate) where T : class, new()
+        {
+            return dbQuery.GetList(predicate);
+        }
+
+        public bool  any<T>(Expression<Func<T, bool>> predicate) where T : class, new()
+        {
+            return dbQuery.any(predicate);
+        }
+
+        public void Delete<T>(Expression<Func<T, bool>> predicate) where T : class, new()
+        {
+            dbQuery.Delete(predicate);
         }
     }
 }

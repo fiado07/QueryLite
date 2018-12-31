@@ -11,6 +11,8 @@ namespace QueryLite.Parameters
 
         public string Sql { get; set; }
 
+        public bool isStoredProcedure { get; set; } = false;
+
         public List<Parameter> Parameter { get; set; }
 
         public SqlAndParameters()

@@ -3,8 +3,6 @@ using QueryLite.Parameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QueryLite.Test.TestCases
 {
@@ -33,7 +31,7 @@ namespace QueryLite.Test.TestCases
             string sql = "insert into Aluno(nota,curso) values(@nota,@curso) ";
             List<Parameter> parameters = new List<Parameter>();
             SqlAndParameters sqlParameters = new SqlAndParameters();
-          
+
 
             parameters.Add(new Parameter { ParameterKey = "@nota", ParameterValue = 50 });
             parameters.Add(new Parameter { ParameterKey = "@curso", ParameterValue = "PttAP2" });
@@ -44,7 +42,7 @@ namespace QueryLite.Test.TestCases
 
             queryBuilder.ExecuteSql(sqlParameters);
 
-                   
+
             Assert.IsTrue(true);
 
 
@@ -92,16 +90,12 @@ namespace QueryLite.Test.TestCases
             Aluno aluno = new Aluno();
 
             parameters.Add(new Parameter { ParameterKey = "@alunoID", ParameterValue = 1 });
-            //parameters.Add(new Parameter { ParameterKey = "@curso", ParameterValue = "PttAP" });
-
 
             sqlParameters.Sql = sql;
             sqlParameters.Parameter = parameters;
 
             aluno = queryBuilder.ExecuteSqlGetObject<Aluno>(sqlParameters);
 
-
-            Console.WriteLine(aluno.Nome);
 
             Assert.IsTrue(true);
 
@@ -176,6 +170,47 @@ namespace QueryLite.Test.TestCases
 
             Assert.IsTrue(table.Rows.Count > 0);
 
+
+
+        }
+
+        [Test]
+        public void ExecuteSql_AddObject()
+        {
+            List<string> exclude = new List<string>() { "alunoID" };
+            Aluno aluno = new Aluno() { curso = "curs2", Nome = "fiaTest", data = DateTime.Now, nota = "12" };
+
+
+            queryBuilder.Add(aluno, exclude);
+
+            Assert.IsTrue(true);
+
+
+        }
+
+        [Test]
+        public void ExecuteSql_UpdateObject()
+        {
+            List<string> exclude = new List<string>() { "alunoID" };
+            Aluno aluno = new Aluno() { curso = "AAA", Nome = "fiaTest", data = DateTime.Now, nota = "40" };
+
+            queryBuilder.Update(aluno, "alunoID=23", exclude);
+
+
+            Assert.IsTrue(true);
+
+        }
+
+
+        [Test]
+        public void ExecuteSql_GetObject()
+        {
+
+            Aluno aluno = null;
+
+            aluno = queryBuilder.Get<Aluno>((x) => x.curso.Contains( "AAA") && x.Nome.EndsWith("BB") && x.Nome.StartsWith ("CC") && x.curso .Contains ("CC"));
+
+            Assert.IsNotNull(aluno);
 
 
         }

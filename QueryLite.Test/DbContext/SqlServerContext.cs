@@ -8,9 +8,9 @@ namespace QueryLite.Test.TestCases
     public class SqlServerContext : Contracts.IDbConnectionSql
     {
 
-        private string SqlConnectionString = @"Persist Security Info=False;Integrated Security=true;Initial Catalog=;server=";
+        private string SqlConnectionString = @"Persist Security Info=False;Integrated Security=true;Initial Catalog=escola;server=.\sqlexpress";
 
-        public bool canClose { get; set; }
+        public bool canClose { get; set; } = true;
 
 
         public IDbConnection DbConnectionBase { get; set; }
